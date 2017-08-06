@@ -1,7 +1,7 @@
-﻿using ErrorHandlingExt.Extensions;
-using ErrorHandlingExt.Samples.Data;
+﻿using ErrorHandlingExt.Samples.Data;
 using System;
 using System.Linq;
+using ErrorHandlingExt.Extensions;
 
 namespace ErrorHandlingExt.Samples
 {

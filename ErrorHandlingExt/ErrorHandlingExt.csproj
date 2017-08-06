@@ -1,20 +1,25 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netstandard1.2</TargetFramework>
     <PackageId>ErrorHandlingExt</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Samuel Garcia</Authors>
     <Description>C# language extensions for error handling.</Description>
-    <RepositoryUrl>https://github.com/samgarasx/ErrorHandlingExt</RepositoryUrl>
+    <RepositoryUrl></RepositoryUrl>
     <Copyright>Copyright 2017 (c) Samuel Garcia. All rights reserved.</Copyright>
     <PackageTags>result error handling</PackageTags>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Company>samgarasx@gmail.com</Company>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+    <Company></Company>
+    <PackageProjectUrl>https://github.com/samgarasx/ErrorHandlingExt</PackageProjectUrl>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>bin\Release\netstandard1.4\ErrorHandlingExt.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\netstandard1.2\ErrorHandlingExt.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
