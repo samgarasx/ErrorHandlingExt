@@ -9,6 +9,8 @@
     <RepositoryUrl>https://github.com/samgarasx/ErrorHandlingExt</RepositoryUrl>
     <Copyright>Copyright 2017 (c) Samuel Garcia. All rights reserved.</Copyright>
     <PackageTags>result error handling</PackageTags>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Company>samgarasx@gmail.com</Company>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
