@@ -21,7 +21,9 @@ namespace ErrorHandlingExt.Extensions
             if (!result.IsSuccess)
                 return Result<TResult>.FromFailure(result.Error);
 
-            return Result<TResult>.FromSuccess(func());
+            TResult value = func();
+
+            return Result<TResult>.FromSuccess(value);
         }
 
         /// <summary>
@@ -75,6 +77,20 @@ namespace ErrorHandlingExt.Extensions
         /// <param name="action">The method to call.</param>
         /// <returns></returns>
         public static Result OnSuccess(this Result result, Action action)
+        {
+            if (result.IsSuccess)
+                action();
+
+            return result;
+        }
+        
+        /// <summary>
+        /// Returns a successful or failed <see cref="Result{T}"/> from a method call.
+        /// </summary>
+        /// <param name="result">The source <see cref="Result{T}"/>.</param>
+        /// <param name="action">The method to call.</param>
+        /// <returns></returns>
+        public static Result<TSource> OnSuccess<TSource>(this Result<TSource> result, Action action)
         {
             if (result.IsSuccess)
                 action();
@@ -191,6 +207,26 @@ namespace ErrorHandlingExt.Extensions
 
             return Result<TSource>.FromSuccess(result.Value);
         }
+        
+        /// <summary>
+        /// Returns a successful or failed <see cref="Result{T}"/> with the given error type from a conditional method call.
+        /// </summary>
+        /// <typeparam name="TSource">The source <see cref="Result{T}.Value"/> type.</typeparam>
+        /// <param name="result">The source <see cref="Result{T}"/>.</param>
+        /// <param name="predicate">The method to call.</param>
+        /// <param name="error">The <see cref="Result{T}.Error"/>.</param>
+        /// <returns></returns>
+        public static Result<TSource> Ensure<TSource>(
+            this Result<TSource> result, Func<bool> predicate, Exception error)
+        {
+            if (!result.IsSuccess)
+                return Result<TSource>.FromFailure(result.Error);
+
+            if (!predicate())
+                return Result<TSource>.FromFailure(error);
+
+            return Result<TSource>.FromSuccess(result.Value);
+        }
 
         #endregion
 
@@ -208,7 +244,9 @@ namespace ErrorHandlingExt.Extensions
             if (!result.IsSuccess)
                 return Result<TResult>.FromFailure(result.Error);
 
-            return Result<TResult>.FromSuccess(func());
+            TResult value = func();
+
+            return Result<TResult>.FromSuccess(value);
         }
 
         /// <summary>
@@ -228,7 +266,25 @@ namespace ErrorHandlingExt.Extensions
 
             return Result<TResult>.FromSuccess(value);
         }
+        
+        /// <summary>
+        /// Returns a successful or failed <see cref="Result{T}"/> from a mapping method call.
+        /// </summary>
+        /// <typeparam name="TSource">The source <see cref="Result{T}.Value"/> type.</typeparam>
+        /// <typeparam name="TResult">The result <see cref="Result{T}.Value"/> type.</typeparam>
+        /// <param name="result">The source <see cref="Result{T}"/>.</param>
+        /// <param name="func">The method to call.</param>
+        /// <returns></returns>
+        public static Result<TResult> Map<TSource, TResult>(this Result<TSource> result, Func<TResult> func)
+        {
+            if (!result.IsSuccess)
+                return Result<TResult>.FromFailure(result.Error);
 
+            TResult value = func();
+            
+            return Result<TResult>.FromSuccess(value);
+        }
+        
         #endregion
 
         #region Failure Result Extension

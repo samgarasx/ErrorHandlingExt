@@ -191,7 +191,7 @@ namespace ErrorHandlingExt
         }
 
         /// <summary>
-        /// Creates a <see cref="Result{T}"/> from a return method call.
+        /// Creates a <see cref="Result{T}"/> from a method call.
         /// </summary>
         /// <param name="func">The method to call.</param>
         /// <returns></returns>
@@ -210,7 +210,7 @@ namespace ErrorHandlingExt
         }
 
         /// <summary>
-        /// Creates a <see cref="Result{T}"/> from an asynchronous return method call.
+        /// Creates a <see cref="Result{T}"/> from an asynchronous method call.
         /// </summary>
         /// <param name="func">The asynchronous method to call.</param>
         /// <returns></returns>
