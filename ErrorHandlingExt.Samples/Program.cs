@@ -1,13 +1,13 @@
-﻿using ErrorHandlingExt.Extensions;
-using ErrorHandlingExt.Samples.Data;
+﻿using ErrorHandlingExt.Samples.Data;
 using System;
 using System.Linq;
+using ErrorHandlingExt.Extensions;
 
 namespace ErrorHandlingExt.Samples
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             var carService = new CarService(new CarRepository());
 

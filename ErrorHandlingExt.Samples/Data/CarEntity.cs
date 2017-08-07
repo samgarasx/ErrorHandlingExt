@@ -8,7 +8,7 @@
 
         public CarEntity(int id)
         {
-            this.Id = id;
+            Id = id;
         }
     }
 }

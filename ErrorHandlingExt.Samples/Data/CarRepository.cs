@@ -9,7 +9,7 @@ namespace ErrorHandlingExt.Samples.Data
     {
         public Result<IEnumerable<Car>> GetCars()
         {
-            return Result<IEnumerable<CarEntity>>.From(() => CloudDatabase.GetCars())
+            return Result<IEnumerable<CarEntity>>.From(CloudDatabase.GetCars)
                 .Map(cars => cars.Select(car => new Car
                 {
                     Id = car.Id,
@@ -21,7 +21,7 @@ namespace ErrorHandlingExt.Samples.Data
         public async Task<Result<IEnumerable<Car>>> GetCarsAsync()
         {
             return await Task.FromResult(
-                Result<IEnumerable<CarEntity>>.From(() => CloudDatabase.GetCars())
+                Result<IEnumerable<CarEntity>>.From(CloudDatabase.GetCars)
                 .Map(cars => cars.Select(car => new Car
                 {
                     Id = car.Id,

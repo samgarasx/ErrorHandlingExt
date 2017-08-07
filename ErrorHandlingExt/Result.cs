@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ErrorHandlingExt
 {
@@ -15,7 +15,7 @@ namespace ErrorHandlingExt
         public bool IsSuccess { get; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private Exception error;
+        private readonly Exception _error;
         /// <summary>
         /// Returns an <see cref="Exception"/> from failed <see cref="Result"/>.
         /// </summary>
@@ -24,18 +24,18 @@ namespace ErrorHandlingExt
             [DebuggerStepThrough]
             get
             {
-                if (this.IsSuccess)
+                if (IsSuccess)
                     throw new InvalidOperationException("There is no error for success.");
 
-                return this.error;
+                return _error;
             }
         }
 
         [DebuggerStepThrough]
         private Result(bool isSuccess, Exception error = null)
         {
-            this.IsSuccess = isSuccess;
-            this.error = error;
+            IsSuccess = isSuccess;
+            _error = error;
         }
 
         /// <summary>
@@ -73,11 +73,11 @@ namespace ErrorHandlingExt
             try
             {
                 action();
-                return Result.FromSuccess();
+                return FromSuccess();
             }
             catch (Exception ex)
             {
-                return Result.FromFailure(ex);
+                return FromFailure(ex);
             }
         }
 
@@ -92,11 +92,11 @@ namespace ErrorHandlingExt
             try
             {
                 await func().ConfigureAwait(false);
-                return Result.FromSuccess();
+                return FromSuccess();
             }
             catch (Exception ex)
             {
-                return Result.FromFailure(ex);
+                return FromFailure(ex);
             }
         }
     }
@@ -113,7 +113,7 @@ namespace ErrorHandlingExt
         public bool IsSuccess { get; private set; }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly T value;
+        private readonly T _value;
         /// <summary>
         /// Returns the value of <see cref="Result{T}"/>.
         /// </summary>
@@ -122,15 +122,15 @@ namespace ErrorHandlingExt
             [DebuggerStepThrough]
             get
             {
-                if (!this.IsSuccess)
+                if (!IsSuccess)
                     throw new InvalidOperationException("There is no value for failure.");
 
-                return this.value;
+                return _value;
             }
         }
 
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        private readonly Exception error;
+        private readonly Exception _error;
         /// <summary>
         /// Returns an <see cref="Exception"/> from failed <see cref="Result{T}"/>.
         /// </summary>
@@ -139,27 +139,27 @@ namespace ErrorHandlingExt
             [DebuggerStepThrough]
             get
             {
-                if (this.IsSuccess)
+                if (IsSuccess)
                     throw new InvalidOperationException("There is no error for success.");
 
-                return this.error;
+                return _error;
             }
         }
 
         [DebuggerStepThrough]
         private Result(T value)
         {
-            this.IsSuccess = true;
-            this.value = value;
-            this.error = null;
+            IsSuccess = true;
+            _value = value;
+            _error = null;
         }
 
         [DebuggerStepThrough]
         private Result(Exception error)
         {
-            this.IsSuccess = false;
-            this.value = default(T);
-            this.error = error;
+            IsSuccess = false;
+            _value = default(T);
+            _error = error;
         }
 
         /// <summary>
@@ -201,11 +201,11 @@ namespace ErrorHandlingExt
             try
             {
                 var value = func();
-                return Result<T>.FromSuccess(value);
+                return FromSuccess(value);
             }
             catch (Exception ex)
             {
-                return Result<T>.FromFailure(ex);
+                return FromFailure(ex);
             }
         }
 
@@ -220,11 +220,11 @@ namespace ErrorHandlingExt
             try
             {
                 var value = await func().ConfigureAwait(false);
-                return Result<T>.FromSuccess(value);
+                return FromSuccess(value);
             }
             catch (Exception ex)
             {
-                return Result<T>.FromFailure(ex);
+                return FromFailure(ex);
             }
         }
     }
