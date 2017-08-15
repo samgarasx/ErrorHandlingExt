@@ -20,14 +20,18 @@ namespace ErrorHandlingExt.Samples.Data
 
         public async Task<Result<IEnumerable<Car>>> GetCarsAsync()
         {
-            return await Task.FromResult(
-                Result<IEnumerable<CarEntity>>.From(CloudDatabase.GetCars)
+            await Task.Delay(2000);
+
+            return await Task.Run(() =>
+            {
+                return Result<IEnumerable<CarEntity>>.From(CloudDatabase.GetCars)
                 .Map(cars => cars.Select(car => new Car
                 {
                     Id = car.Id,
                     Brand = car.Brand,
                     Model = car.Model,
-                })));
+                }));
+            });
         }
 
         public Result<Car> GetCar(int id)
@@ -43,13 +47,18 @@ namespace ErrorHandlingExt.Samples.Data
 
         public async Task<Result<Car>> GetCarAsync(int id)
         {
-            return await Task.FromResult(Result<CarEntity>.From(() => CloudDatabase.GetCar(id))
-                .Map(car => new Car
-                {
-                    Id = car.Id,
-                    Brand = car.Brand,
-                    Model = car.Model,
-                }));
+            await Task.Delay(2000);
+
+            return await Task.Run(() =>
+            {
+                return Result<CarEntity>.From(() => CloudDatabase.GetCar(id))
+                    .Map(car => new Car
+                    {
+                        Id = car.Id,
+                        Brand = car.Brand,
+                        Model = car.Model,
+                    });
+            });
         }
     }
 }
