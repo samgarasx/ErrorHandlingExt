@@ -3,10 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
     <PackageId>ErrorHandlingExt</PackageId>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <Title>Error Handling Extensions</Title>
     <Authors>Samuel Garcia</Authors>
-    <Description>C# language extensions for error handling.</Description>
+    <Description>Language extensions for error handling.</Description>
     <Copyright>Copyright 2017 (c) Samuel Garcia. All rights reserved.</Copyright>
     <PackageTags>result error</PackageTags>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -14,9 +14,9 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/samgarasx/ErrorHandlingExt</RepositoryUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Version>1.0.4</Version>
-    <AssemblyVersion>1.0.4.0</AssemblyVersion>
-    <FileVersion>1.0.4.0</FileVersion>
+    <Version>1.2.0</Version>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

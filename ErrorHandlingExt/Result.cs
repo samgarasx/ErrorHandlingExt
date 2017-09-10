@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 namespace ErrorHandlingExt
 {
+    #region Result
+
     /// <summary>
     /// Result structure.
     /// </summary>
@@ -49,7 +51,7 @@ namespace ErrorHandlingExt
         }
 
         /// <summary>
-        /// Creates a failed <see cref="Result"/> with given error type.
+        /// Creates a failed <see cref="Result"/> with given error.
         /// </summary>
         /// <param name="error">The <see cref="Result"/> error.</param>
         /// <returns></returns>
@@ -73,6 +75,7 @@ namespace ErrorHandlingExt
             try
             {
                 action();
+
                 return FromSuccess();
             }
             catch (Exception ex)
@@ -82,7 +85,25 @@ namespace ErrorHandlingExt
         }
 
         /// <summary>
-        /// Creates a <see cref="Result"/> from an asynchronous method call.
+        /// Creates a <see cref="Result"/> from a method call.
+        /// </summary>
+        /// <param name="func">The method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result From(Func<Result> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result"/> task from an asynchronous method call.
         /// </summary>
         /// <param name="func">The asynchronous method to call.</param>
         /// <returns></returns>
@@ -92,6 +113,7 @@ namespace ErrorHandlingExt
             try
             {
                 await func().ConfigureAwait(false);
+
                 return FromSuccess();
             }
             catch (Exception ex)
@@ -99,7 +121,55 @@ namespace ErrorHandlingExt
                 return FromFailure(ex);
             }
         }
+
+        /// <summary>
+        /// Creates a <see cref="Result"/> task from an asynchronous method call.
+        /// </summary>
+        /// <param name="func">The asynchronous method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result> FromAsync(Func<Task<Result>> func)
+        {
+            try
+            {
+                return await func().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result"/> task from a synchronous method call.
+        /// </summary>
+        /// <param name="action">The synchronous method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result> FromAsync(Action action)
+        {
+            Result result = From(action);
+
+            return await Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result"/> task from a synchronous method call.
+        /// </summary>
+        /// <param name="func">The synchronous method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result> FromAsync(Func<Result> func)
+        {
+            Result result = From(func);
+
+            return await Task.FromResult(result);
+        }
     }
+
+    #endregion
+
+    #region Result<T>
 
     /// <summary>
     /// Result&lt;T&gt; structure.
@@ -177,7 +247,7 @@ namespace ErrorHandlingExt
         }
 
         /// <summary>
-        /// Creates a failed <see cref="Result{T}"/> with given error type.
+        /// Creates a failed <see cref="Result{T}"/> with given error.
         /// </summary>
         /// <param name="error">The <see cref="Result{T}"/> error.</param>
         /// <returns></returns>
@@ -200,7 +270,8 @@ namespace ErrorHandlingExt
         {
             try
             {
-                var value = func();
+                T value = func();
+
                 return FromSuccess(value);
             }
             catch (Exception ex)
@@ -210,7 +281,25 @@ namespace ErrorHandlingExt
         }
 
         /// <summary>
-        /// Creates a <see cref="Result{T}"/> from an asynchronous method call.
+        /// Creates a <see cref="Result{T}"/> from a method call.
+        /// </summary>
+        /// <param name="func">The method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result<T> From(Func<Result<T>> func)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T}"/> task from an asynchronous method call.
         /// </summary>
         /// <param name="func">The asynchronous method to call.</param>
         /// <returns></returns>
@@ -219,7 +308,8 @@ namespace ErrorHandlingExt
         {
             try
             {
-                var value = await func().ConfigureAwait(false);
+                T value = await func().ConfigureAwait(false);
+
                 return FromSuccess(value);
             }
             catch (Exception ex)
@@ -227,5 +317,254 @@ namespace ErrorHandlingExt
                 return FromFailure(ex);
             }
         }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T}"/> task from an asynchronous method call.
+        /// </summary>
+        /// <param name="func">The asynchronous method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T>> FromAsync(Func<Task<Result<T>>> func)
+        {
+            try
+            {
+                return await func().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(ex);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T}"/> task from a synchronous method call.
+        /// </summary>
+        /// <param name="func">The synchronous method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T>> FromAsync(Func<T> func)
+        {
+            Result<T> result = From(func);
+
+            return await Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T}"/> task from a synchronous method call.
+        /// </summary>
+        /// <param name="func">The synchronous method to call.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T>> FromAsync(Func<Result<T>> func)
+        {
+            Result<T> result = From(func);
+
+            return await Task.FromResult(result);
+        }
     }
+
+    #endregion;
+
+    #region Result<T, E>
+
+    /// <summary>
+    /// Result&lt;T, E&gt; structure.
+    /// </summary>
+    /// <typeparam name="T">Type of <see cref="Value"/> property.</typeparam>
+    /// <typeparam name="E">Type of <see cref="Error"/> property.</typeparam>
+    public struct Result<T, E>
+    {
+        /// <summary>
+        /// Returns if <see cref="Result{T, E}"/> is successful or not.
+        /// </summary>
+        public bool IsSuccess { get; private set; }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly T _value;
+        /// <summary>
+        /// Returns the value of <see cref="Result{T}"/>.
+        /// </summary>
+        public T Value
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                if (!IsSuccess)
+                    throw new InvalidOperationException("There is no value for failure.");
+
+                return _value;
+            }
+        }
+
+        [DebuggerBrowsable(DebuggerBrowsableState.Never)]
+        private readonly E _error;
+        /// <summary>
+        /// Returns an <see cref="Exception"/> from failed <see cref="Result{T}"/>.
+        /// </summary>
+        public E Error
+        {
+            [DebuggerStepThrough]
+            get
+            {
+                if (IsSuccess)
+                    throw new InvalidOperationException("There is no error for success.");
+
+                return _error;
+            }
+        }
+
+        [DebuggerStepThrough]
+        private Result(T value)
+        {
+            IsSuccess = true;
+            _value = value;
+            _error = default(E);
+        }
+
+        [DebuggerStepThrough]
+        private Result(E error)
+        {
+            IsSuccess = false;
+            _value = default(T);
+            _error = error;
+        }
+
+        /// <summary>
+        /// Creates a successful <see cref="Result{T, E}"/> with given value type.
+        /// </summary>
+        /// <param name="value">The <see cref="Result{T, E}.Value"/>.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result<T, E> FromSuccess(T value)
+        {
+            if (value == null)
+                throw new ArgumentNullException(nameof(value));
+
+            return new Result<T, E>(value);
+        }
+
+        /// <summary>
+        /// Creates a failed <see cref="Result{T, E}"/> with given error type.
+        /// </summary>
+        /// <param name="error">The <see cref="Result{T, E}"/> error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result<T, E> FromFailure(E error)
+        {
+            if (error == null)
+                throw new ArgumentNullException(nameof(error));
+
+            return new Result<T, E>(error);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T, E}"/> from a method call.
+        /// </summary>
+        /// <param name="func">The method to call.</param>
+        /// <param name="error">The error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result<T, E> From(Func<T> func, E error)
+        {
+            try
+            {
+                T value = func();
+
+                return FromSuccess(value);
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(error);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T, E}"/> from a method call.
+        /// </summary>
+        /// <param name="func">The method to call.</param>
+        /// <param name="error">The error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static Result<T, E> From(Func<Result<T, E>> func, E error)
+        {
+            try
+            {
+                return func();
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(error);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T, E}"/> task from an asynchronous method call.
+        /// </summary>
+        /// <param name="func">The asynchronous method to call.</param>
+        /// <param name="error">The error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T, E>> FromAsync(Func<Task<T>> func, E error)
+        {
+            try
+            {
+                T value = await func().ConfigureAwait(false);
+
+                return FromSuccess(value);
+            }         
+            catch (Exception ex)
+            {
+                return FromFailure(error);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T, E}"/> task from an asynchronous method call.
+        /// </summary>
+        /// <param name="func">The asynchronous method to call.</param>
+        /// <param name="error">The error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T, E>> FromAsync(Func<Task<Result<T, E>>> func, E error)
+        {
+            try
+            {
+                return await func().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                return FromFailure(error);
+            }
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T, E}"/> task from a synchronous method call.
+        /// </summary>
+        /// <param name="func">The synchronous method to call.</param>
+        /// <param name="error">The error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T, E>> FromAsync(Func<T> func, E error)
+        {
+            Result<T, E> result = From(func, error);
+
+            return await Task.FromResult(result);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="Result{T, E}"/> task from a synchronous method call.
+        /// </summary>
+        /// <param name="func">The synchronous method to call.</param>
+        /// <param name="error">The error type.</param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static async Task<Result<T, E>> FromAsync(Func<Result<T, E>> func, E error)
+        {
+            Result<T, E> result = From(func, error);
+
+            return await Task.FromResult(result);
+        }
+    }
+
+    #endregion
 }

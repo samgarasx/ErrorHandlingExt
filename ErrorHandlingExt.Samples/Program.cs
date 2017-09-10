@@ -1,7 +1,8 @@
-﻿using ErrorHandlingExt.Samples.Data;
+﻿using ErrorHandlingExt.Extensions;
+using ErrorHandlingExt.Extensions.Tasks;
+using ErrorHandlingExt.Samples.Data;
 using System;
 using System.Linq;
-using ErrorHandlingExt.Extensions;
 using System.Threading.Tasks;
 
 namespace ErrorHandlingExt.Samples
@@ -28,8 +29,6 @@ namespace ErrorHandlingExt.Samples
 
             public async Task Run()
             {
-                var carService = new CarService(new CarRepository());
-
                 carService.GetCars()
                     .OnSuccess(cars => cars.ToList().ForEach(car => Console.WriteLine(car.Model)))
                     .OnFailure(error => Console.WriteLine(error.Message));
@@ -38,13 +37,27 @@ namespace ErrorHandlingExt.Samples
                     .OnSuccess(cars => cars.ToList().ForEach(car => Console.WriteLine(car.Model)))
                     .OnFailure(error => Console.WriteLine(error.Message));
 
-                carService.GetCar(3)
+                carService.GetCar(1)
                     .OnSuccess(car => Console.WriteLine(car.Model))
                     .OnFailure(error => Console.WriteLine(error.Message));
 
-                await carService.GetCarAsync(1)
+                await carService.GetCarAsync(3)
                     .OnSuccess(car => Console.WriteLine(car.Model))
                     .OnFailure(error => Console.WriteLine(error.Message));
+
+                carService.GetCars("Audi")
+                    .Map(cars =>
+                    {
+                        if (!cars.Any())
+                            throw new Exception("Cars");
+                        return cars;
+                    }, new Exception("There is no Audi cars."))
+                    .OnSuccess(cars =>
+                    {
+                        cars.ToList().ForEach(car => Console.WriteLine(car.Model));
+                        return cars;
+                    })
+                    .OnFailure(error => Console.WriteLine(error.Message), new Exception("Error"));
             }
         }
     }

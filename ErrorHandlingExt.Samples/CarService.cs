@@ -18,6 +18,11 @@ namespace ErrorHandlingExt.Samples
             return _repository.GetCars();
         }
 
+        public Result<IEnumerable<Car>> GetCars(string brand)
+        {
+            return _repository.GetCars(brand);
+        }
+
         public async Task<Result<IEnumerable<Car>>> GetCarsAsync()
         {
             return await _repository.GetCarsAsync();

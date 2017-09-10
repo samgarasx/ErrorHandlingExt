@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ErrorHandlingExt.Samples.Data
 {
     public class CloudDatabase
     {
-        private static List<CarEntity> Cars = new List<CarEntity>()
+        private static IEnumerable<CarEntity> Cars = new List<CarEntity>()
         {
             new CarEntity(1)
             {
@@ -21,12 +22,17 @@ namespace ErrorHandlingExt.Samples.Data
 
         public static IEnumerable<CarEntity> GetCars()
         {
-            return Cars;
+            return Cars.ToList();
+        }
+
+        public static IEnumerable<CarEntity> GetCars(string brand)
+        {
+            return Cars.Where(car => car.Brand == brand).ToList();
         }
 
         public static CarEntity GetCar(int id)
         {
-            var foundCar = Cars.Find(car => car.Id == id);
+            var foundCar = Cars.FirstOrDefault(car => car.Id == id);
             if (foundCar == null)
                 throw new Exception($"Can not find car with id={id}");
 

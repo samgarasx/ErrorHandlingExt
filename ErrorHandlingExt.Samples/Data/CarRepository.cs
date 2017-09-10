@@ -1,4 +1,5 @@
 ﻿using ErrorHandlingExt.Extensions;
+using ErrorHandlingExt.Extensions.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,18 @@ namespace ErrorHandlingExt.Samples.Data
     {
         public Result<IEnumerable<Car>> GetCars()
         {
-            return Result<IEnumerable<CarEntity>>.From(CloudDatabase.GetCars)
+            return Result<IEnumerable<CarEntity>>.From(() => CloudDatabase.GetCars())
+                .Map(cars => cars.Select(car => new Car
+                {
+                    Id = car.Id,
+                    Brand = car.Brand,
+                    Model = car.Model,
+                }));
+        }
+
+        public Result<IEnumerable<Car>> GetCars(string brand)
+        {
+            return Result<IEnumerable<CarEntity>>.From(() => CloudDatabase.GetCars(brand))
                 .Map(cars => cars.Select(car => new Car
                 {
                     Id = car.Id,
@@ -22,16 +34,13 @@ namespace ErrorHandlingExt.Samples.Data
         {
             await Task.Delay(2000);
 
-            return await Task.Run(() =>
-            {
-                return Result<IEnumerable<CarEntity>>.From(CloudDatabase.GetCars)
+            return await Result<IEnumerable<CarEntity>>.FromAsync(() => CloudDatabase.GetCars())
                 .Map(cars => cars.Select(car => new Car
                 {
                     Id = car.Id,
                     Brand = car.Brand,
                     Model = car.Model,
                 }));
-            });
         }
 
         public Result<Car> GetCar(int id)
@@ -49,16 +58,13 @@ namespace ErrorHandlingExt.Samples.Data
         {
             await Task.Delay(2000);
 
-            return await Task.Run(() =>
-            {
-                return Result<CarEntity>.From(() => CloudDatabase.GetCar(id))
-                    .Map(car => new Car
-                    {
-                        Id = car.Id,
-                        Brand = car.Brand,
-                        Model = car.Model,
-                    });
-            });
+            return await Result<CarEntity>.FromAsync(() => CloudDatabase.GetCar(id))
+                .Map(car => new Car
+                {
+                    Id = car.Id,
+                    Brand = car.Brand,
+                    Model = car.Model,
+                });
         }
     }
 }
