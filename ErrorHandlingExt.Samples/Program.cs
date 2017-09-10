@@ -52,11 +52,7 @@ namespace ErrorHandlingExt.Samples
                             throw new Exception("Cars");
                         return cars;
                     }, new Exception("There is no Audi cars."))
-                    .OnSuccess(cars =>
-                    {
-                        cars.ToList().ForEach(car => Console.WriteLine(car.Model));
-                        return cars;
-                    })
+                    .OnSuccess(cars => cars.ToList().ForEach(car => Console.WriteLine(car.Model)), new Exception("Error"))
                     .OnFailure(error => Console.WriteLine(error.Message), new Exception("Error"));
             }
         }

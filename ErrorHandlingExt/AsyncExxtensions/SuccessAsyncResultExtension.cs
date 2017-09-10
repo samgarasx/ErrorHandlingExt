@@ -499,66 +499,6 @@ namespace ErrorHandlingExt.Extensions.Tasks
         }
 
         /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from an asynchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The asynchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<Task<TResult>> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from an asynchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The asynchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<TSource, Task<TResult>> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from an asynchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The asynchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<Task<Result<TResult, TError>>> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from an asynchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The asynchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<TSource, Task<Result<TResult, TError>>> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
         /// Returns a successful or failed <see cref="Result{T, E}"/> task from a synchronous method call.
         /// </summary>
         /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
@@ -654,66 +594,6 @@ namespace ErrorHandlingExt.Extensions.Tasks
             this Task<Result<TSource, TError>> resultTask, Func<TSource, Result<TResult, TError>> func, TError error)
         {
             return await resultTask.Map(func, error).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from a synchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The synchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<TResult> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from a synchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The synchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<TSource, TResult> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from a synchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The synchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<Result<TResult, TError>> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> task from a synchronous method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="resultTask">The source <see cref="Result{T, E}"/> task.</param>
-        /// <param name="func">The asynchronous method to call.</param>
-        /// <returns></returns>
-        public static async Task<Result<TResult, TError>> OnSuccess<TSource, TResult, TError>(
-            this Task<Result<TSource, TError>> resultTask, Func<TSource, Result<TResult, TError>> func)
-        {
-            return await resultTask.Map(func).ConfigureAwait(false);
         }
 
         #endregion

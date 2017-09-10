@@ -266,66 +266,6 @@ namespace ErrorHandlingExt.Extensions
             return result.Map(func, error);
         }
 
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> from a method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="result">The source <see cref="Result{T, E}"/>.</param>
-        /// <param name="func">The method to call.</param>
-        /// <returns></returns>
-        public static Result<TResult, TError> OnSuccess<TSource, TResult, TError>(
-            this Result<TSource, TError> result, Func<TResult> func)
-        {
-            return result.Map(func);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> from a method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="result">The source <see cref="Result{T, E}"/>.</param>
-        /// <param name="func">The method to call.</param>
-        /// <returns></returns>
-        public static Result<TResult, TError> OnSuccess<TSource, TResult, TError>(
-            this Result<TSource, TError> result, Func<TSource, TResult> func)
-        {
-            return result.Map(func);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> from a method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="result">The source <see cref="Result{T, E}"/>.</param>
-        /// <param name="func">The method to call.</param>
-        /// <returns></returns>
-        public static Result<TResult, TError> OnSuccess<TSource, TResult, TError>(
-            this Result<TSource, TError> result, Func<Result<TResult, TError>> func)
-        {
-            return result.Map(func);
-        }
-
-        /// <summary>
-        /// Returns a successful or failed <see cref="Result{T, E}"/> from a method call.
-        /// </summary>
-        /// <typeparam name="TSource">The source <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TResult">The result <see cref="Result{T, E}.Value"/> type.</typeparam>
-        /// <typeparam name="TError">The result <see cref="Result{T, E}.Error"/> type.</typeparam>
-        /// <param name="result">The source <see cref="Result{T, E}"/>.</param>
-        /// <param name="func">The method to call.</param>
-        /// <returns></returns>
-        public static Result<TResult, TError> OnSuccess<TSource, TResult, TError>(
-            this Result<TSource, TError> result, Func<TSource, Result<TResult, TError>> func)
-        {
-            return result.Map(func);
-        }
-
         #endregion
     }
 }
