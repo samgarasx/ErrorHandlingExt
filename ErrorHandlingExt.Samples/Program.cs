@@ -18,42 +18,32 @@ namespace ErrorHandlingExt.Samples
             Console.ReadLine();
         }
 
-        public class App
+        private class App
         {
-            private readonly CarService carService;
+            private readonly CarService _carService;
 
             public App(CarService carService)
             {
-                this.carService = carService;
+                _carService = carService;
             }
 
             public async Task Run()
             {
-                carService.GetCars()
+                _carService.GetCars()
                     .OnSuccess(cars => cars.ToList().ForEach(car => Console.WriteLine(car.Model)))
                     .OnFailure(error => Console.WriteLine(error.Message));
 
-                await carService.GetCarsAsync()
+                await _carService.GetCarsAsync()
                     .OnSuccess(cars => cars.ToList().ForEach(car => Console.WriteLine(car.Model)))
                     .OnFailure(error => Console.WriteLine(error.Message));
 
-                carService.GetCar(1)
+                _carService.GetCar(1)
                     .OnSuccess(car => Console.WriteLine(car.Model))
                     .OnFailure(error => Console.WriteLine(error.Message));
 
-                await carService.GetCarAsync(3)
+                await _carService.GetCarAsync(3)
                     .OnSuccess(car => Console.WriteLine(car.Model))
                     .OnFailure(error => Console.WriteLine(error.Message));
-
-                carService.GetCars("Audi")
-                    .Map(cars =>
-                    {
-                        if (!cars.Any())
-                            throw new Exception("Cars");
-                        return cars;
-                    }, new Exception("There is no Audi cars."))
-                    .OnSuccess(cars => cars.ToList().ForEach(car => Console.WriteLine(car.Model)), new Exception("Error"))
-                    .OnFailure(error => Console.WriteLine(error.Message), new Exception("Error"));
             }
         }
     }

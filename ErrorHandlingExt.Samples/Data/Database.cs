@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace ErrorHandlingExt.Samples.Data
 {
-    public class CloudDatabase
+    public static class Database
     {
-        private static IEnumerable<CarEntity> Cars = new List<CarEntity>()
+        private static readonly IEnumerable<CarEntity> Cars = new List<CarEntity>
         {
             new CarEntity(1)
             {
