@@ -7,7 +7,7 @@
     <Authors>Samuel Garcia</Authors>
     <Description>C# language extensions for error handling.</Description>
     <Copyright>Copyright 2017 (c) Samuel Garcia. All rights reserved.</Copyright>
-    <PackageTags>result error</PackageTags>
+    <PackageTags>ext result error</PackageTags>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/samgarasx/ErrorHandlingExt</PackageProjectUrl>
     <RepositoryType>git</RepositoryType>
