@@ -1,4 +1,7 @@
 # ErrorHandlingExt
+Channel  | Ext |
+-------- | :------------:
+NuGet.org | [![#](https://img.shields.io/nuget/v/ErrorHandlingExt.svg)](https://www.nuget.org/packages/ErrorHandlingExt/) | [![#](https://img.shields.io/nuget/v/ErrorHandlingExt.svg)](https://www.nuget.org/packages/ErrorHandlingExt/)
 
 ### v2.0 breaking changes
 Some result extensions are no longer available.
